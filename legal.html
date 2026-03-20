@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Legal Notice, Terms & Risk Warning | BELOBABA Dubai</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --gold: #C9A052;
+  --black: #0A0A0A;
+  --dark: #1A1A1A;
+  --gray-700: #374151;
+  --gray-500: #6B7280;
+  --gray-300: #D1D5DB;
+  --gray-100: #F3F4F6;
+  --gray-50: #F9FAFB;
+  --white: #FFFFFF;
+  --font: 'Geist', -apple-system, BlinkMacSystemFont, sans-serif;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --radius: 8px;
+}
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font);
+  color: var(--dark);
+  background: var(--white);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.7;
+}
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 40px;
+  height: 64px;
+}
+.nav-logo img { height: 30px; display: block; }
+.nav-links { display: flex; gap: 32px; list-style: none; }
+.nav-links a {
+  font-size: 13px; font-weight: 400;
+  color: var(--gray-700);
+  text-decoration: none;
+  letter-spacing: -0.01em;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--black); }
+.btn-nav {
+  background: var(--black); color: var(--white);
+  font-family: var(--font); font-size: 13px; font-weight: 500;
+  padding: 9px 20px; border: none; border-radius: 6px;
+  text-decoration: none; cursor: pointer;
+  transition: all 0.3s var(--ease);
+}
+.btn-nav:hover { background: var(--dark); transform: translateY(-2px); }
+
+/* CONTENT */
+.content {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 120px 40px 80px;
+}
+h1 {
+  font-size: clamp(32px, 5vw, 48px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  margin-bottom: 16px;
+  color: var(--black);
+}
+.subtitle {
+  font-size: 14px;
+  color: var(--gray-500);
+  margin-bottom: 48px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--gray-200);
+}
+h2 {
+  font-size: 24px;
+  font-weight: 600;
+  margin-top: 40px;
+  margin-bottom: 16px;
+  color: var(--black);
+}
+h3 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-top: 24px;
+  margin-bottom: 12px;
+  color: var(--gray-700);
+}
+p {
+  margin-bottom: 16px;
+  color: var(--gray-700);
+}
+ul, ol {
+  margin-bottom: 16px;
+  padding-left: 24px;
+}
+li {
+  margin-bottom: 8px;
+  color: var(--gray-700);
+}
+a {
+  color: var(--gold);
+  text-decoration: none;
+}
+a:hover { text-decoration: underline; }
+.warning-box {
+  background: #fff3cd;
+  border-left: 4px solid var(--gold);
+  padding: 20px;
+  margin: 24px 0;
+  border-radius: 0 var(--radius) var(--radius) 0;
+}
+.warning-box p { margin-bottom: 0; color: #856404; }
+
+/* FOOTER */
+footer {
+  background: var(--black);
+  padding: 48px 40px 32px;
+  color: white;
+}
+.footer-grid {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+.footer-brand img { height: 26px; opacity: 0.7; }
+.footer-links { display: flex; gap: 24px; }
+.footer-links a {
+  font-size: 13px;
+  color: rgba(255,255,255,0.55);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.footer-links a:hover { color: white; }
+.footer-bottom {
+  max-width: 1000px;
+  margin: 32px auto 0;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  font-size: 12px;
+  color: rgba(255,255,255,0.25);
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  nav { padding: 0 20px; }
+  .nav-links { display: none; }
+  .content { padding: 100px 20px 60px; }
+  .footer-grid { flex-direction: column; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo"><img src="logo.png" alt="BELOBABA"></a>
+  <ul class="nav-links">
+    <li><a href="index.html#services">Services</a></li>
+    <li><a href="index.html#founder">About</a></li>
+    <li><a href="index.html#contact-form">Contact</a></li>
+  </ul>
+  <a href="https://wa.me/34690364316" target="_blank" class="btn-nav">Get Started</a>
+</nav>
+
+<div class="content">
+  <h1>Legal Notice, Terms & Risk Warning</h1>
+  <p class="subtitle">Effective date: March 2025 · Version 1.0</p>
+
+  <h2>1. Legal Notice</h2>
+  
+  <h3>1.1 Company Information</h3>
+  <p><strong>Company Name:</strong> BELOBABA Asset Management L.L.C-FZ<br>
+  <strong>License Number:</strong> 2528682.01<br>
+  <strong>Registered Address:</strong> Meydan Grandstand, 6th Floor, Meydan Road, Nad Al Sheba, Dubai, United Arab Emirates<br>
+  <strong>Free Zone:</strong> Meydan Free Zone, Dubai, UAE<br>
+  <strong>Contact Email:</strong> <a href="mailto:rdianaz@belobaba.io">rdianaz@belobaba.io</a><br>
+  <strong>Website:</strong> <a href="https://dubai.belobaba.io">https://dubai.belobaba.io</a></p>
+
+  <h3>1.2 Regulatory Status</h3>
+  <p>BELOBABA Asset Management L.L.C-FZ is a company registered in the Meydan Free Zone, Dubai, UAE. The company provides corporate services and real estate consultancy services. This Website is operated for the purpose of providing information about our services and facilitating initial client contact.</p>
+  
+  <p>The services described on this Website do not constitute regulated financial services under UAE law. We do not provide investment advice, asset management, or financial product recommendations. Our services are limited to:</p>
+  <ul>
+    <li>Corporate formation and company setup consultancy</li>
+    <li>Real estate investment facilitation and property sourcing</li>
+    <li>Administrative support for business establishment in the UAE</li>
+  </ul>
+
+  <h3>1.3 Intellectual Property</h3>
+  <p>All content on this Website, including but not limited to text, graphics, logos, images, and software, is the property of BELOBABA Asset Management L.L.C-FZ or its licensors and is protected by UAE and international intellectual property laws. No content may be reproduced, distributed, or transmitted without prior written consent.</p>
+
+  <h2>2. Terms of Use</h2>
+  
+  <h3>2.1 Acceptance of Terms</h3>
+  <p>By accessing and using this Website, you agree to be bound by these Terms of Use. If you do not agree with any part of these terms, you must not use this Website.</p>
+
+  <h3>2.2 Use of the Website</h3>
+  <p>You agree to use this Website only for lawful purposes and in a manner that does not infringe the rights of, or restrict or inhibit the use and enjoyment of, this Website by any third party. Prohibited conduct includes:</p>
+  <ul>
+    <li>Transmitting material that is unlawful, harmful, threatening, abusive, harassing, defamatory, or otherwise objectionable</li>
+    <li>Impersonating any person or entity, or falsely stating or misrepresenting your affiliation with a person or entity</li>
+    <li>Attempting to gain unauthorised access to any portion of the Website or any systems or networks connected to the Website</li>
+    <li>Using any automated system or software to extract data from the Website without our express written consent</li>
+  </ul>
+
+  <h3>2.3 Limitation of Liability</h3>
+  <p>To the fullest extent permitted by applicable law, BELOBABA Asset Management L.L.C-FZ shall not be liable for any direct, indirect, incidental, special, consequential, or punitive damages arising out of or relating to your use of, or inability to use, this Website or the services described herein.</p>
+  
+  <p>This limitation applies whether the alleged liability is based on contract, tort, negligence, strict liability, or any other basis, even if we have been advised of the possibility of such damage.</p>
+
+  <h3>2.4 Third-Party Links</h3>
+  <p>This Website may contain links to third-party websites. These links are provided for your convenience only. We have no control over the content of these websites and accept no responsibility for them or for any loss or damage that may arise from your use of them.</p>
+
+  <h3>2.5 Governing Law and Jurisdiction</h3>
+  <p>These Terms of Use shall be governed by and construed in accordance with the laws of the United Arab Emirates. Any dispute arising under or in connection with these terms shall be subject to the exclusive jurisdiction of the courts of Dubai, UAE.</p>
+
+  <h2>3. Risk Warning</h2>
+  
+  <div class="warning-box">
+    <p><strong>IMPORTANT NOTICE:</strong> Investing in real estate and establishing companies in foreign jurisdictions involves significant risks. Past performance is not indicative of future results. You should carefully consider whether such activities are suitable for you in light of your circumstances and financial resources.</p>
+  </div>
+
+  <h3>3.1 Real Estate Investment Risks</h3>
+  <p>Real estate investments are subject to various risks, including but not limited to:</p>
+  <ul>
+    <li><strong>Market Risk:</strong> Property values can fluctuate due to changes in economic conditions, interest rates, and local market factors</li>
+    <li><strong>Liquidity Risk:</strong> Real estate investments may not be easily convertible to cash without significant loss of value</li>
+    <li><strong>Regulatory Risk:</strong> Changes in laws, regulations, or government policies may affect property ownership, taxation, or usage rights</li>
+    <li><strong>Currency Risk:</strong> For international investors, fluctuations in exchange rates may affect the value of investments</li>
+    <li><strong>Operational Risk:</strong> Rental income may be affected by vacancy periods, tenant defaults, or property maintenance issues</li>
+  </ul>
+
+  <h3>3.2 Company Formation Risks</h3>
+  <p>Establishing a company in the UAE involves certain risks and considerations:</p>
+  <ul>
+    <li><strong>Regulatory Compliance:</strong> Companies must comply with all applicable UAE laws and free zone regulations. Non-compliance may result in penalties or license revocation</li>
+    <li><strong>Financial Commitment:</strong> Company establishment involves costs including license fees, visa fees, office rent, and ongoing operational expenses</li>
+    <li><strong>Business Risk:</strong> All business activities carry inherent risks of loss. There is no guarantee of profitability</li>
+    <li><strong>Visa and Immigration:</strong> Visa approvals are subject to government discretion and health/security checks</li>
+  </ul>
+
+  <h3>3.3 No Investment Advice</h3>
+  <p>The information provided on this Website is for general informational purposes only and does not constitute investment advice, financial advice, or a recommendation to engage in any particular transaction. We strongly recommend that you:</p>
+  <ul>
+    <li>Seek independent legal, tax, and financial advice before making any investment or business decision</li>
+    <li>Conduct your own due diligence on any investment opportunity</li>
+    <li>Only invest capital that you can afford to lose</li>
+    <li>Carefully review all documentation and contracts before signing</li>
+  </ul>
+
+  <h3>3.4 No Guarantee</h3>
+  <p>BELOBABA Asset Management L.L.C-FZ makes no representations or warranties of any kind, express or implied, about the completeness, accuracy, reliability, suitability, or availability of the information, products, services, or related graphics contained on this Website for any purpose.</p>
+
+  <h2>4. Contact</h2>
+  <p>If you have any questions about these Legal Notices, Terms, or Risk Warnings, please contact us at:</p>
+  <p>BELOBABA Asset Management L.L.C-FZ<br>
+  Meydan Grandstand, 6th Floor, Meydan Road, Nad Al Sheba, Dubai, U.A.E.<br>
+  Email: <a href="mailto:rdianaz@belobaba.io">rdianaz@belobaba.io</a><br>
+  Website: <a href="https://dubai.belobaba.io">https://dubai.belobaba.io</a></p>
+</div>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand"><img src="logo.png" alt="BELOBABA"></div>
+    <div class="footer-links">
+      <a href="legal.html">Legal Notice</a>
+      <a href="privacy.html">Privacy Policy</a>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2026 BELOBABA Dubai. All rights reserved.</div>
+</footer>
+
+</body>
+</html>
