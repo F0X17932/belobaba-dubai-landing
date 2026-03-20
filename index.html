@@ -424,8 +424,8 @@ form.addEventListener('submit', async (e) => {
     message: document.getElementById('message').value
   };
   
-  // Google Apps Script URL
-  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwSmmjM5CCd2F0JXCnqj0Rknh8dc_cqDjLw4FvDxqv3XgtH8Rn-5dOz-RWMGgBQTsyb/exec';
+  // Google Apps Script URL (v2)
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwSmmjM5CCd2F0JXCnqj0Rknh8dc_cqDjLw4FvDxqv3XgtH8Rn-5dOz-RWMGgBQTsyb/exec?v=2';
   
   try {
     const response = await fetch(SCRIPT_URL, {
