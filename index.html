@@ -424,8 +424,8 @@ form.addEventListener('submit', async (e) => {
     message: document.getElementById('message').value
   };
   
-  // TODO: Replace with your Google Apps Script URL
-  const SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL';
+  // Google Apps Script URL
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwSmmjM5CCd2F0JXCnqj0Rknh8dc_cqDjLw4FvDxqv3XgtH8Rn-5dOz-RWMGgBQTsyb/exec';
   
   try {
     const response = await fetch(SCRIPT_URL, {
