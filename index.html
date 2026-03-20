@@ -403,52 +403,40 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.1 });
 document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
 
-// Form submission
+// Form submission - mailto approach (like Improving CI)
 const form = document.getElementById('contactForm');
 const submitBtn = document.getElementById('submitBtn');
 const formMessage = document.getElementById('formMessage');
 
-form.addEventListener('submit', async (e) => {
+form.addEventListener('submit', function(e) {
   e.preventDefault();
-  submitBtn.disabled = true;
-  submitBtn.innerHTML = 'Sending...';
   
-  const data = {
-    name: document.getElementById('name').value,
-    email: document.getElementById('email').value,
-    phone: document.getElementById('phone').value,
-    service: document.getElementById('service').value,
-    companyType: document.getElementById('companyType').value,
-    visas: document.getElementById('visas').value,
-    office: document.getElementById('office').value,
-    message: document.getElementById('message').value
-  };
+  const name = document.getElementById('name').value;
+  const email = document.getElementById('email').value;
+  const phone = document.getElementById('phone').value;
+  const service = document.getElementById('service').value;
+  const companyType = document.getElementById('companyType').value;
+  const visas = document.getElementById('visas').value;
+  const office = document.getElementById('office').value;
+  const message = document.getElementById('message').value;
   
-  // Google Apps Script URL (v2)
-  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwSmmjM5CCd2F0JXCnqj0Rknh8dc_cqDjLw4FvDxqv3XgtH8Rn-5dOz-RWMGgBQTsyb/exec?v=2';
+  const subject = encodeURIComponent('New Contact Form - BELOBABA Dubai');
+  const body = encodeURIComponent(
+    'Name: ' + name + '\n' +
+    'Email: ' + email + '\n' +
+    'Phone: ' + (phone || 'Not provided') + '\n' +
+    'Service: ' + service + '\n' +
+    'Company Type: ' + (companyType || 'Not specified') + '\n' +
+    'Visas: ' + (visas || 'Not specified') + '\n' +
+    'Office: ' + office + '\n\n' +
+    'Message:\n' + message
+  );
   
-  try {
-    const response = await fetch(SCRIPT_URL, {
-      method: 'POST',
-      body: JSON.stringify(data),
-      headers: { 'Content-Type': 'application/json' }
-    });
-    const result = await response.json();
-    
-    if (result.result === 'success') {
-      formMessage.className = 'form-message success';
-      formMessage.textContent = 'Thank you! We will contact you within 24 hours.';
-      form.reset();
-    } else {
-      throw new Error(result.message);
-    }
-  } catch (error) {
-    formMessage.className = 'form-message error';
-    formMessage.textContent = 'Error sending message. Please try WhatsApp instead.';
-  }
+  window.location.href = 'mailto:rdianaz@belobaba.io?subject=' + subject + '&body=' + body;
   
-  submitBtn.disabled = false;
-  submitBtn.innerHTML = 'Send Request<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  formMessage.className = 'form-message success';
+  formMessage.textContent = 'Opening your email client...';
+  form.reset();
 });
 </script>
 </body>
