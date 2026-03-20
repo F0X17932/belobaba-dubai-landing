@@ -12,14 +12,11 @@
 
 :root {
   --gold: #C9A052;
-  --gold-light: #E8C97A;
   --black: #0A0A0A;
   --dark: #1A1A1A;
-  --gray-900: #111111;
   --gray-700: #374151;
   --gray-500: #6B7280;
   --gray-300: #D1D5DB;
-  --gray-100: #F3F4F6;
   --gray-50: #F9FAFB;
   --white: #FFFFFF;
   --font: 'Geist', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -36,6 +33,29 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* ANIMATIONS */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
+}
+.animate-on-scroll.visible { opacity: 1; transform: translateY(0); }
+.animate-delay-1 { transition-delay: 0.1s; }
+.animate-delay-2 { transition-delay: 0.2s; }
+.animate-delay-3 { transition-delay: 0.3s; }
+.animate-delay-4 { transition-delay: 0.4s; }
+
 /* NAV */
 nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
@@ -45,31 +65,47 @@ nav {
   display: flex; align-items: center; justify-content: space-between;
   padding: 0 40px;
   height: 64px;
-  transition: box-shadow 0.3s;
+  transition: all 0.3s var(--ease);
+  animation: fadeIn 0.6s var(--ease);
 }
-nav.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,0.08); }
+nav.scrolled { box-shadow: 0 4px 30px rgba(0,0,0,0.1); height: 56px; }
+.nav-logo { transition: transform 0.3s var(--ease); }
+.nav-logo:hover { transform: scale(1.05); }
 .nav-logo img { height: 30px; display: block; }
-.nav-links {
-  display: flex; gap: 32px; list-style: none;
-}
+.nav-links { display: flex; gap: 32px; list-style: none; }
 .nav-links a {
   font-size: 13px; font-weight: 400;
   color: var(--gray-700);
   text-decoration: none;
   letter-spacing: -0.01em;
-  transition: color 0.2s;
+  transition: all 0.2s;
+  position: relative;
+}
+.nav-links a::after {
+  content: ''; position: absolute; bottom: -4px; left: 0;
+  width: 0; height: 2px; background: var(--gold);
+  transition: width 0.3s var(--ease);
 }
 .nav-links a:hover { color: var(--black); }
+.nav-links a:hover::after { width: 100%; }
 .nav-right { display: flex; align-items: center; gap: 12px; }
 .btn-nav {
   background: var(--black); color: var(--white);
   font-family: var(--font); font-size: 13px; font-weight: 500;
   padding: 9px 20px; border: none; border-radius: 6px;
   text-decoration: none; cursor: pointer;
-  transition: background 0.2s, transform 0.15s;
+  transition: all 0.3s var(--ease);
   display: inline-flex; align-items: center; gap: 6px;
+  position: relative; overflow: hidden;
 }
-.btn-nav:hover { background: var(--dark); transform: translateY(-1px); }
+.btn-nav::before {
+  content: ''; position: absolute; top: 0; left: -100%;
+  width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.5s;
+}
+.btn-nav:hover { background: var(--dark); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.2); }
+.btn-nav:hover::before { left: 100%; }
 
 /* HERO */
 .hero {
@@ -84,21 +120,16 @@ nav.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,0.08); }
   position: absolute; inset: 0;
   background-image: url('hero-bg.png');
   background-size: cover; background-position: center 30%;
-  transform: scale(1.03);
-  transition: transform 8s ease-out;
+  transform: scale(1.1);
+  transition: transform 10s ease-out;
+  animation: scaleIn 1.2s var(--ease);
 }
 .hero-bg.loaded { transform: scale(1); }
 .hero-overlay {
   position: absolute; inset: 0;
-  background: linear-gradient(
-    to bottom,
-    rgba(255,255,255,0.72) 0%,
-    rgba(255,255,255,0.55) 40%,
-    rgba(255,255,255,0.75) 80%,
-    rgba(255,255,255,1) 100%
-  );
+  background: linear-gradient(to bottom, rgba(255,255,255,0.72) 0%, rgba(255,255,255,0.55) 40%, rgba(255,255,255,0.75) 80%, rgba(255,255,255,1) 100%);
 }
-.hero-content { position: relative; max-width: 680px; }
+.hero-content { position: relative; max-width: 680px; animation: fadeInUp 0.8s var(--ease) 0.2s both; }
 .hero-tag {
   display: inline-flex; align-items: center; gap: 8px;
   background: rgba(255,255,255,0.85);
@@ -107,240 +138,150 @@ nav.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,0.08); }
   padding: 5px 14px 5px 10px;
   font-size: 12px; font-weight: 500; color: var(--gray-700);
   margin-bottom: 24px;
+  animation: fadeInUp 0.6s var(--ease) 0.3s both;
+  transition: all 0.3s;
 }
-.hero-tag-dot {
-  width: 7px; height: 7px;
-  background: var(--gold); border-radius: 50%;
-}
+.hero-tag:hover { background: var(--white); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+.hero-tag-dot { width: 7px; height: 7px; background: var(--gold); border-radius: 50%; animation: pulse 2s infinite; }
 h1 {
   font-size: clamp(36px, 5.5vw, 62px);
-  font-weight: 700;
-  line-height: 1.05;
-  letter-spacing: -0.03em;
-  color: var(--black);
-  margin-bottom: 18px;
+  font-weight: 700; line-height: 1.05; letter-spacing: -0.03em;
+  color: var(--black); margin-bottom: 18px;
+  animation: fadeInUp 0.6s var(--ease) 0.4s both;
 }
 .hero-sub {
-  font-size: 16px; font-weight: 400;
-  color: var(--gray-700); line-height: 1.6;
-  margin-bottom: 32px;
+  font-size: 16px; font-weight: 400; color: var(--gray-700); line-height: 1.6;
+  margin-bottom: 32px; animation: fadeInUp 0.6s var(--ease) 0.5s both;
 }
-.hero-btns {
-  display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
-}
+.hero-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; animation: fadeInUp 0.6s var(--ease) 0.6s both; }
 .btn-primary {
   background: var(--black); color: var(--white);
   font-family: var(--font); font-size: 14px; font-weight: 500;
   padding: 13px 28px; border: none; border-radius: 6px;
   text-decoration: none; cursor: pointer;
   display: inline-flex; align-items: center; gap: 8px;
-  transition: all 0.2s;
+  transition: all 0.3s var(--ease); position: relative; overflow: hidden;
 }
-.btn-primary:hover { background: #222; transform: translateY(-1px); box-shadow: 0 8px 24px rgba(0,0,0,0.15); }
+.btn-primary::before {
+  content: ''; position: absolute; top: 0; left: -100%;
+  width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.5s;
+}
+.btn-primary:hover { background: #222; transform: translateY(-3px); box-shadow: 0 12px 30px rgba(0,0,0,0.2); }
+.btn-primary:hover::before { left: 100%; }
 .btn-outline {
   background: rgba(255,255,255,0.9); color: var(--black);
   font-family: var(--font); font-size: 14px; font-weight: 500;
   padding: 13px 28px; border: 1.5px solid rgba(0,0,0,0.2); border-radius: 6px;
   text-decoration: none; cursor: pointer;
   display: inline-flex; align-items: center; gap: 8px;
-  transition: all 0.2s;
+  transition: all 0.3s var(--ease);
 }
-.btn-outline:hover { border-color: var(--black); background: white; transform: translateY(-1px); }
+.btn-outline:hover { border-color: var(--black); background: white; transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
 
-/* FOUNDER SECTION */
-.founder-section {
-  padding: 80px 40px;
-  background: var(--gray-50);
-}
-.founder-container {
-  max-width: 1000px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 300px 1fr;
-  gap: 60px;
-  align-items: center;
-}
-.founder-image {
-  width: 100%;
-  border-radius: var(--radius);
-  overflow: hidden;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-}
-.founder-image img {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-.founder-content h2 {
-  font-size: 32px;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  margin-bottom: 8px;
-}
-.founder-role {
-  font-size: 14px;
-  color: var(--gold);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  margin-bottom: 20px;
-}
-.founder-content p {
-  font-size: 15px;
-  color: var(--gray-700);
-  line-height: 1.7;
-  margin-bottom: 16px;
-}
+/* FOUNDER */
+.founder-section { padding: 100px 40px; background: var(--gray-50); overflow: hidden; }
+.founder-container { max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: 320px 1fr; gap: 80px; align-items: center; }
+.founder-image { width: 100%; border-radius: var(--radius); overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.15); transition: all 0.5s var(--ease); }
+.founder-image:hover { transform: translateY(-10px); box-shadow: 0 30px 80px rgba(0,0,0,0.2); }
+.founder-image img { width: 100%; height: auto; display: block; transition: transform 0.5s var(--ease); }
+.founder-image:hover img { transform: scale(1.05); }
+.founder-content h2 { font-size: 36px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 8px; }
+.founder-role { font-size: 14px; color: var(--gold); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 24px; }
+.founder-content p { font-size: 15px; color: var(--gray-700); line-height: 1.8; margin-bottom: 16px; }
 
 /* SERVICES */
-.section { padding: 80px 40px; }
-.label-tag {
-  font-size: 12px; font-weight: 500; color: var(--gold);
-  letter-spacing: 0.06em; text-transform: uppercase;
-  margin-bottom: 12px; display: block;
-}
-.section-title {
-  font-size: clamp(26px, 3vw, 38px);
-  font-weight: 700; letter-spacing: -0.03em;
-  line-height: 1.1; color: var(--black);
-  margin-bottom: 8px;
-}
-.section-subtitle {
-  font-size: 15px; color: var(--gray-500);
-  line-height: 1.6; max-width: 480px;
-}
-.services-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 24px;
-  margin-top: 40px;
-}
+.section { padding: 100px 40px; }
+.label-tag { font-size: 12px; font-weight: 500; color: var(--gold); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 12px; display: block; }
+.section-title { font-size: clamp(28px, 3vw, 38px); font-weight: 700; letter-spacing: -0.03em; line-height: 1.1; color: var(--black); margin-bottom: 8px; }
+.section-subtitle { font-size: 15px; color: var(--gray-500); line-height: 1.6; max-width: 480px; }
+.services-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px; margin-top: 48px; }
 .service-card {
-  background: var(--white);
-  border: 1px solid var(--gray-200, #E5E7EB);
-  border-radius: var(--radius);
-  padding: 40px 32px;
-  transition: all 0.25s;
-  cursor: default;
+  background: var(--white); border: 1px solid var(--gray-300);
+  border-radius: var(--radius); padding: 48px 40px;
+  transition: all 0.4s var(--ease); cursor: default; position: relative; overflow: hidden;
 }
-.service-card:hover {
-  box-shadow: 0 8px 32px rgba(0,0,0,0.08);
-  transform: translateY(-4px);
+.service-card::before {
+  content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px;
+  background: var(--gold); transform: scaleX(0); transform-origin: left; transition: transform 0.4s var(--ease);
 }
-.service-card-title {
-  font-size: 20px; font-weight: 600;
-  color: var(--black); line-height: 1.3;
-  letter-spacing: -0.01em;
-  margin-bottom: 12px;
-}
-.service-card-desc {
-  font-size: 14px; color: var(--gray-500);
-  line-height: 1.6;
-}
+.service-card:hover { box-shadow: 0 20px 50px rgba(0,0,0,0.1); transform: translateY(-8px); border-color: transparent; }
+.service-card:hover::before { transform: scaleX(1); }
+.service-card-title { font-size: 22px; font-weight: 600; color: var(--black); line-height: 1.3; letter-spacing: -0.01em; margin-bottom: 16px; transition: color 0.3s; }
+.service-card:hover .service-card-title { color: var(--gold); }
+.service-card-desc { font-size: 14px; color: var(--gray-500); line-height: 1.7; }
 
-/* CTA FINAL */
-.cta-final {
-  position: relative;
-  min-height: 380px;
-  display: flex; align-items: center;
-  overflow: hidden;
+/* FORM */
+.form-section { padding: 100px 40px; background: linear-gradient(135deg, var(--gray-50) 0%, var(--white) 100%); }
+.form-container { max-width: 800px; margin: 0 auto; }
+.form-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; margin-top: 40px; }
+.form-group { display: flex; flex-direction: column; }
+.form-group.full-width { grid-column: 1 / -1; }
+.form-group label { font-size: 13px; font-weight: 500; color: var(--gray-700); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.02em; }
+.form-group input, .form-group select, .form-group textarea {
+  padding: 14px 16px; border: 1.5px solid var(--gray-300); border-radius: var(--radius);
+  font-family: var(--font); font-size: 14px; color: var(--dark); background: var(--white);
+  transition: all 0.3s var(--ease);
 }
-.cta-bg {
-  position: absolute; inset: 0;
-  background-image: url('hero-bg.png');
-  background-size: cover; background-position: center 60%;
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px rgba(201, 160, 82, 0.1); }
+.form-group textarea { min-height: 120px; resize: vertical; }
+.form-submit { grid-column: 1 / -1; display: flex; justify-content: center; margin-top: 16px; }
+.form-submit button {
+  background: var(--black); color: var(--white); font-family: var(--font); font-size: 15px; font-weight: 600;
+  padding: 16px 48px; border: none; border-radius: var(--radius); cursor: pointer;
+  transition: all 0.3s var(--ease); display: inline-flex; align-items: center; gap: 10px;
 }
-.cta-overlay {
-  position: absolute; inset: 0;
-  background: linear-gradient(to right, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.45) 100%);
-}
-.cta-content {
-  position: relative; z-index: 1;
-  padding: 80px;
-  max-width: 600px;
-}
-.cta-content h2 {
-  font-size: clamp(28px, 4vw, 46px);
-  font-weight: 700; color: white;
-  line-height: 1.1; letter-spacing: -0.03em;
-  margin-bottom: 28px;
-}
+.form-submit button:hover { background: var(--dark); transform: translateY(-3px); box-shadow: 0 12px 30px rgba(0,0,0,0.2); }
+.form-submit button:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+.form-message { grid-column: 1 / -1; text-align: center; padding: 16px; border-radius: var(--radius); font-size: 14px; font-weight: 500; display: none; }
+.form-message.success { background: #d4edda; color: #155724; display: block; animation: fadeIn 0.5s var(--ease); }
+.form-message.error { background: #f8d7da; color: #721c24; display: block; animation: fadeIn 0.5s var(--ease); }
+
+/* CTA */
+.cta-final { position: relative; min-height: 450px; display: flex; align-items: center; overflow: hidden; }
+.cta-bg { position: absolute; inset: 0; background-image: url('hero-bg.png'); background-size: cover; background-position: center 60%; transition: transform 0.5s var(--ease); }
+.cta-final:hover .cta-bg { transform: scale(1.05); }
+.cta-overlay { position: absolute; inset: 0; background: linear-gradient(to right, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.5) 100%); }
+.cta-content { position: relative; z-index: 1; padding: 80px; max-width: 600px; }
+.cta-content h2 { font-size: clamp(32px, 4vw, 48px); font-weight: 700; color: white; line-height: 1.1; letter-spacing: -0.03em; margin-bottom: 28px; }
 .btn-white {
-  background: white; color: var(--black);
-  font-family: var(--font); font-size: 14px; font-weight: 600;
-  padding: 14px 28px; border: none; border-radius: 6px;
-  text-decoration: none; cursor: pointer;
-  display: inline-flex; align-items: center; gap: 8px;
-  transition: all 0.2s;
+  background: white; color: var(--black); font-family: var(--font); font-size: 14px; font-weight: 600;
+  padding: 14px 28px; border: none; border-radius: 6px; text-decoration: none; cursor: pointer;
+  display: inline-flex; align-items: center; gap: 8px; transition: all 0.3s var(--ease);
 }
-.btn-white:hover { background: var(--gray-100); transform: translateY(-1px); box-shadow: 0 8px 24px rgba(0,0,0,0.25); }
+.btn-white:hover { background: var(--gray-100); transform: translateY(-3px); box-shadow: 0 12px 30px rgba(0,0,0,0.3); }
 .btn-whatsapp {
-  background: #25D366; color: white;
-  font-family: var(--font); font-size: 14px; font-weight: 600;
-  padding: 14px 28px; border: none; border-radius: 6px;
-  text-decoration: none; cursor: pointer;
-  display: inline-flex; align-items: center; gap: 10px;
-  transition: all 0.2s; margin-left: 12px;
+  background: #25D366; color: white; font-family: var(--font); font-size: 14px; font-weight: 600;
+  padding: 14px 28px; border: none; border-radius: 6px; text-decoration: none; cursor: pointer;
+  display: inline-flex; align-items: center; gap: 10px; transition: all 0.3s var(--ease); margin-left: 12px;
 }
-.btn-whatsapp:hover { background: #20bc59; transform: translateY(-1px); box-shadow: 0 8px 24px rgba(37,211,102,0.3); }
-.wa-icon {
-  width: 18px; height: 18px; flex-shrink: 0;
-}
+.btn-whatsapp:hover { background: #20bc59; transform: translateY(-3px); box-shadow: 0 12px 30px rgba(37,211,102,0.4); }
+.wa-icon { width: 18px; height: 18px; flex-shrink: 0; }
 
 /* FOOTER */
-footer {
-  background: var(--black);
-  padding: 56px 40px 32px;
-  color: white;
-}
-.footer-grid {
-  display: grid; grid-template-columns: 1.6fr 1fr 1fr;
-  gap: 48px; margin-bottom: 48px;
-  padding-bottom: 40px;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
-}
+footer { background: var(--black); padding: 64px 40px 32px; color: white; }
+.footer-grid { display: grid; grid-template-columns: 1.6fr 1fr 1fr; gap: 48px; margin-bottom: 48px; padding-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,0.08); }
 .footer-brand img { height: 26px; margin-bottom: 16px; opacity: 0.7; display: block; }
-.footer-brand p {
-  font-size: 13px; color: rgba(255,255,255,0.4);
-  line-height: 1.6; max-width: 240px;
-}
-.footer-col-title {
-  font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.35);
-  text-transform: uppercase; letter-spacing: 0.08em;
-  margin-bottom: 16px;
-}
+.footer-brand p { font-size: 13px; color: rgba(255,255,255,0.4); line-height: 1.6; max-width: 240px; }
+.footer-col-title { font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.35); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
 .footer-links { display: flex; flex-direction: column; gap: 10px; }
-.footer-links a {
-  font-size: 13px; color: rgba(255,255,255,0.55);
-  text-decoration: none; transition: color 0.2s;
-}
-.footer-links a:hover { color: white; }
-.footer-bottom {
-  display: flex; justify-content: space-between; align-items: center;
-  font-size: 12px; color: rgba(255,255,255,0.25);
-  flex-wrap: wrap; gap: 12px;
-}
+.footer-links a { font-size: 13px; color: rgba(255,255,255,0.55); text-decoration: none; transition: all 0.2s; display: inline-block; }
+.footer-links a:hover { color: white; transform: translateX(4px); }
+.footer-bottom { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: rgba(255,255,255,0.25); flex-wrap: wrap; gap: 12px; }
 
 /* RESPONSIVE */
 @media (max-width: 768px) {
-  nav { padding: 0 20px; }
-  .nav-links { display: none; }
+  nav { padding: 0 20px; } .nav-links { display: none; }
   .hero { padding: 100px 20px 60px; }
-  .section { padding: 56px 20px; }
-  .founder-container {
-    grid-template-columns: 1fr;
-    gap: 32px;
-    text-align: center;
-  }
-  .founder-image {
-    max-width: 280px;
-    margin: 0 auto;
-  }
-  .services-grid { grid-template-columns: 1fr; }
-  .cta-content { padding: 48px 24px; }
+  .section, .founder-section, .form-section { padding: 60px 20px; }
+  .founder-container { grid-template-columns: 1fr; gap: 40px; text-align: center; }
+  .founder-image { max-width: 280px; margin: 0 auto; }
+  .services-grid, .form-grid { grid-template-columns: 1fr; }
+  .cta-content { padding: 60px 24px; }
   .btn-whatsapp { margin-left: 0; margin-top: 12px; }
   .footer-grid { grid-template-columns: 1fr; gap: 32px; }
-  footer { padding: 40px 20px 24px; }
+  footer { padding: 48px 20px 24px; }
 }
 @media (max-width: 480px) {
   h1 { font-size: 32px; }
@@ -351,74 +292,56 @@ footer {
 </head>
 <body>
 
-<!-- NAV -->
 <nav id="nav">
-  <a href="#" class="nav-logo">
-    <img src="logo.png" alt="BELOBABA">
-  </a>
+  <a href="#" class="nav-logo"><img src="logo.png" alt="BELOBABA"></a>
   <ul class="nav-links">
     <li><a href="#services">Services</a></li>
     <li><a href="#founder">About</a></li>
-    <li><a href="#contact">Contact</a></li>
+    <li><a href="#contact-form">Contact</a></li>
   </ul>
   <div class="nav-right">
     <a href="https://wa.me/34690364316" target="_blank" class="btn-nav">Get Started</a>
   </div>
 </nav>
 
-<!-- HERO -->
 <section class="hero">
   <div class="hero-bg" id="heroBg"></div>
   <div class="hero-overlay"></div>
   <div class="hero-content">
-    <div class="hero-tag">
-      <div class="hero-tag-dot"></div>
-      Dubai Corporate Experts
-    </div>
+    <div class="hero-tag"><div class="hero-tag-dot"></div>Dubai Corporate Experts</div>
     <h1>Corporate Services &<br>Real Estate in Dubai</h1>
     <p class="hero-sub">Premium business setup and real estate investment solutions in the UAE. Your trusted partner for corporate establishment and property investment.</p>
     <div class="hero-btns">
-      <a href="https://wa.me/34690364316" target="_blank" class="btn-primary">
-        Start My Company
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </a>
+      <a href="https://wa.me/34690364316" target="_blank" class="btn-primary">Start My Company<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
       <a href="#services" class="btn-outline">Our Services</a>
     </div>
   </div>
 </section>
 
-<!-- FOUNDER -->
 <section class="founder-section" id="founder">
   <div class="founder-container">
-    <div class="founder-image">
-      <img src="lluis-mas.webp" alt="Lluís Mas - Founder & Chairman">
-    </div>
-    <div class="founder-content">
+    <div class="founder-image animate-on-scroll"><img src="lluis-mas.webp" alt="Lluís Mas - Founder & Chairman"></div>
+    <div class="founder-content animate-on-scroll animate-delay-1">
       <h2>Lluís Mas</h2>
       <div class="founder-role">Founder & Chairman</div>
       <p>With extensive experience in corporate services and real estate investment in the UAE, Lluís Mas leads BELOBABA Dubai with a commitment to excellence and client success.</p>
       <p>Our mission is to provide premium business setup solutions and real estate investment opportunities, helping entrepreneurs and investors establish a strong presence in Dubai's thriving market.</p>
-      <a href="https://wa.me/34690364316" target="_blank" class="btn-primary" style="margin-top: 8px;">
-        Connect on WhatsApp
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </a>
+      <a href="https://wa.me/34690364316" target="_blank" class="btn-primary" style="margin-top: 8px;">Connect on WhatsApp<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
     </div>
   </div>
 </section>
 
-<!-- SERVICES -->
 <section class="section" id="services">
   <div style="max-width: 1000px; margin: 0 auto;">
-    <span class="label-tag">What We Offer</span>
-    <h2 class="section-title">Our Core Services</h2>
-    <p class="section-subtitle">Specialized corporate and real estate solutions tailored for your success in Dubai.</p>
-    
+    <span class="label-tag animate-on-scroll">What We Offer</span>
+    <h2 class="section-title animate-on-scroll animate-delay-1">Our Core Services</h2>
+    <p class="section-subtitle animate-on-scroll animate-delay-2">Specialized corporate and real estate solutions tailored for your success in Dubai.</p>
     <div class="services-grid">
-      <div class="service-card">
+      <div class="service-card animate-on-scroll">
         <div class="service-card-title">Corporate Services</div>
         <p class="service-card-desc">Complete business setup solutions including company formation, licensing, and corporate structuring. We handle mainland, free zone, and offshore company establishment with full regulatory compliance.</p>
       </div>
-      <div class="service-card">
+      <div class="service-card animate-on-scroll animate-delay-1">
         <div class="service-card-title">Real Estate</div>
         <p class="service-card-desc">Premium real estate investment opportunities and property management services. From residential to commercial properties, we guide you through Dubai's dynamic real estate market.</p>
       </div>
@@ -426,65 +349,107 @@ footer {
   </div>
 </section>
 
-<!-- CTA FINAL -->
+<section class="form-section" id="contact-form">
+  <div class="form-container">
+    <span class="label-tag animate-on-scroll">Get In Touch</span>
+    <h2 class="section-title animate-on-scroll animate-delay-1">Request a Quote</h2>
+    <p class="section-subtitle animate-on-scroll animate-delay-2">Tell us about your project and we'll get back to you within 24 hours.</p>
+    <form class="form-grid" id="contactForm">
+      <div class="form-group animate-on-scroll animate-delay-1"><label for="name">Full Name</label><input type="text" id="name" name="name" required placeholder="Your name"></div>
+      <div class="form-group animate-on-scroll animate-delay-1"><label for="email">Email</label><input type="email" id="email" name="email" required placeholder="your@email.com"></div>
+      <div class="form-group animate-on-scroll animate-delay-2"><label for="phone">Phone</label><input type="tel" id="phone" name="phone" placeholder="+34 600 000 000"></div>
+      <div class="form-group animate-on-scroll animate-delay-2"><label for="service">Service Type</label><select id="service" name="service" required><option value="">Select a service</option><option value="Corporate Services">Corporate Services</option><option value="Real Estate">Real Estate</option></select></div>
+      <div class="form-group animate-on-scroll animate-delay-3"><label for="companyType">Company Type</label><select id="companyType" name="companyType"><option value="">Select type</option><option value="Mainland">Mainland</option><option value="Free Zone">Free Zone</option><option value="Offshore">Offshore</option></select></div>
+      <div class="form-group animate-on-scroll animate-delay-3"><label for="visas">Number of Visas</label><input type="number" id="visas" name="visas" min="0" placeholder="1"></div>
+      <div class="form-group animate-on-scroll animate-delay-4"><label for="office">Office Space Needed?</label><select id="office" name="office"><option value="No">No</option><option value="Yes">Yes</option></select></div>
+      <div class="form-group full-width animate-on-scroll animate-delay-4"><label for="message">Message</label><textarea id="message" name="message" placeholder="Tell us about your project..."></textarea></div>
+      <div class="form-submit animate-on-scroll animate-delay-4"><button type="submit" id="submitBtn">Send Request<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+      <div class="form-message" id="formMessage"></div>
+    </form>
+  </div>
+</section>
+
 <div class="cta-final" id="contact">
   <div class="cta-bg"></div>
   <div class="cta-overlay"></div>
   <div class="cta-content">
     <h2>Ready to start your<br>Dubai journey?</h2>
     <div style="display:flex;flex-wrap:wrap;gap:12px;">
-      <a href="https://wa.me/34690364316" target="_blank" class="btn-white">
-        Start My Company
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="#1A1A1A" stroke-width="1.2"/><path d="M5 7h4M7 5l2 2-2 2" stroke="#1A1A1A" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </a>
-      <a href="https://wa.me/34690364316" target="_blank" class="btn-whatsapp">
-        <svg class="wa-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.118 1.528 5.847L.057 23.485a.5.5 0 00.609.61l5.696-1.493A11.954 11.954 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.943 0-3.76-.524-5.318-1.437l-.38-.222-3.924 1.028 1.046-3.818-.247-.394A9.956 9.956 0 012 12C2 6.486 6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></svg>
-        WhatsApp Us
-      </a>
+      <a href="https://wa.me/34690364316" target="_blank" class="btn-white">WhatsApp Us<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="#1A1A1A" stroke-width="1.2"/><path d="M5 7h4M7 5l2 2-2 2" stroke="#1A1A1A" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
     </div>
   </div>
 </div>
 
-<!-- FOOTER -->
 <footer>
   <div class="footer-grid">
-    <div class="footer-brand">
-      <img src="logo.png" alt="BELOBABA">
-      <p>Premium corporate services and real estate solutions in Dubai. Your trusted partner for business success in the UAE.</p>
-    </div>
-    <div>
-      <div class="footer-col-title">Services</div>
-      <div class="footer-links">
-        <a href="#services">Corporate Services</a>
-        <a href="#services">Real Estate</a>
-        <a href="https://wa.me/34690364316" target="_blank">Get Started</a>
-      </div>
-    </div>
-    <div>
-      <div class="footer-col-title">Contact</div>
-      <div class="footer-links">
-        <a href="https://wa.me/34690364316" target="_blank">WhatsApp</a>
-        <a href="#founder">About Lluís Mas</a>
-      </div>
-    </div>
+    <div class="footer-brand"><img src="logo.png" alt="BELOBABA"><p>Premium corporate services and real estate solutions in Dubai. Your trusted partner for business success in the UAE.</p></div>
+    <div><div class="footer-col-title">Services</div><div class="footer-links"><a href="#services">Corporate Services</a><a href="#services">Real Estate</a><a href="https://wa.me/34690364316" target="_blank">Get Started</a></div></div>
+    <div><div class="footer-col-title">Contact</div><div class="footer-links"><a href="https://wa.me/34690364316" target="_blank">WhatsApp</a><a href="#founder">About Lluís Mas</a></div></div>
   </div>
-  <div class="footer-bottom">
-    <span>©2025 BELOBABA Dubai. All rights reserved.</span>
-    <span>Your Dubai business partner.</span>
-  </div>
+  <div class="footer-bottom"><span>©2025 BELOBABA Dubai. All rights reserved.</span><span>Your Dubai business partner.</span></div>
 </footer>
 
 <script>
-  // Nav scroll effect
-  const nav = document.getElementById('nav');
-  window.addEventListener('scroll', () => {
-    nav.classList.toggle('scrolled', window.scrollY > 40);
-  }, { passive: true });
+// Nav scroll effect
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 40); }, { passive: true });
 
-  // Hero parallax on bg load
-  window.addEventListener('load', () => {
-    document.getElementById('heroBg').classList.add('loaded');
-  });
+// Hero bg load
+window.addEventListener('load', () => { document.getElementById('heroBg').classList.add('loaded'); });
+
+// Scroll animations
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); } });
+}, { threshold: 0.1 });
+document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+
+// Form submission
+const form = document.getElementById('contactForm');
+const submitBtn = document.getElementById('submitBtn');
+const formMessage = document.getElementById('formMessage');
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  submitBtn.disabled = true;
+  submitBtn.innerHTML = 'Sending...';
+  
+  const data = {
+    name: document.getElementById('name').value,
+    email: document.getElementById('email').value,
+    phone: document.getElementById('phone').value,
+    service: document.getElementById('service').value,
+    companyType: document.getElementById('companyType').value,
+    visas: document.getElementById('visas').value,
+    office: document.getElementById('office').value,
+    message: document.getElementById('message').value
+  };
+  
+  // TODO: Replace with your Google Apps Script URL
+  const SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL';
+  
+  try {
+    const response = await fetch(SCRIPT_URL, {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: { 'Content-Type': 'application/json' }
+    });
+    const result = await response.json();
+    
+    if (result.result === 'success') {
+      formMessage.className = 'form-message success';
+      formMessage.textContent = 'Thank you! We will contact you within 24 hours.';
+      form.reset();
+    } else {
+      throw new Error(result.message);
+    }
+  } catch (error) {
+    formMessage.className = 'form-message error';
+    formMessage.textContent = 'Error sending message. Please try WhatsApp instead.';
+  }
+  
+  submitBtn.disabled = false;
+  submitBtn.innerHTML = 'Send Request<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+});
 </script>
 </body>
 </html>
